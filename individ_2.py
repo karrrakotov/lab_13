@@ -1,35 +1,38 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-
 import sys
 from dataclasses import dataclass, field
-import sys
 from typing import List
 import xml.etree.ElementTree as ET
 
-#   Выполнить индивидуальное задание 2 лабораторной работы 9, использовав классы данных, а
-#   также загрузку и сохранение данных в формат XML.
+
+#   Для варианта задания лабораторной работы 8 необходимо дополнительно
+#   реализовать сохранение и чтение данных из файла формата JSON. Необходимо проследить за
+#   тем, чтобы файлы генерируемый этой программой не попадали в репозиторий лабораторной
+#   работы.
 
 
 @dataclass(frozen=True)
-class person:
+class Person:
     name: str
     group: str
-    marks: int
+    marks: list
+
 
 @dataclass
 class Staff:
-    students: List[person] = field(default_factory=lambda: [])
+    students: List[Person] = field(default_factory=lambda: [])
 
     def add(self, name, group, marks):
         self.students.append(
-            person(
+            Person(
                 name=name,
                 group=group,
                 marks=marks
             )
         )
+
         self.students.sort(key=lambda person: person.name)
 
     def __str__(self):
@@ -49,50 +52,40 @@ class Staff:
         table.append(line)
         table.append(
             '| {:^3} | {:^30} | {:^20} | {:^8} | {:^8} | {:^8} | {:^8} | {:^8} |'.format(
-                    "№",
-                    "Ф.И.О.",
-                    "Группа",
-                    "1-ая оценка",
-                    "2-ая оценка",
-                    "3-ая оценка",
-                    "4-ая оценка",
-                    "5-ая оценка"
-                )
+                "№",
+                "Ф.И.О.",
+                "Группа",
+                "1-ая оценка",
+                "2-ая оценка",
+                "3-ая оценка",
+                "4-ая оценка",
+                "5-ая оценка"
             )
+        )
         table.append(line)
 
         # Вывести данные о всех сотрудниках.
-        for idx, person in enumerate(students, 1):
-            print(
+        for idx, person in enumerate(self.students, 1):
+            table.append(
                 '| {:>3} | {:<30} | {:<20} | {:>11} | {:>11} | {:>11} | {:>11} | {:>11} |'.format(
                     idx,
-                    person.get('name', ''),
-                    person.get('group', ''),
-                    person.get('marks[0]', f'{marks[0]}'),
-                    person.get('marks[1]', f'{marks[1]}'),
-                    person.get('marks[2]', f'{marks[2]}'),
-                    person.get('marks[3]', f'{marks[3]}'),
-                    person.get('marks[4]', f'{marks[4]}')
+                    person.name,
+                    person.group,
+                    person.marks[0],
+                    person.marks[1],
+                    person.marks[2],
+                    person.marks[3],
+                    person.marks[4]
                 )
             )
         table.append(line)
 
         return '\n'.join(table)
 
-    def select(self):
-        parts = command.split(' ', maxsplit=2)
-        global period
-        period = int(parts[1])
-        count = 0
-        for person in students:
-            if 2 in marks:
-                count += 1
-                print(
-                    '{:>4}: {}'.format(count, person.get('name', ''))
-                )
-        # Если счетчик равен 0, то работники не найдены.
-        if count == 0:
-            print("Нет студентов, которые получили оценку - 2.")
+    @staticmethod
+    def select():
+        result = []
+        return result
 
     def load(self, filename):
         with open(filename, 'r', encoding='utf8') as fin:
@@ -110,12 +103,12 @@ class Staff:
                 elif element.tag == 'group':
                     group = element.text
                 elif element.tag == 'marks':
-                    marks = list(element.text)
+                    marks = element.text
 
                 if name is not None and group is not None \
                         and marks is not None:
                     self.students.append(
-                        person(
+                        Person(
                             name=name,
                             group=group,
                             marks=marks
@@ -142,9 +135,9 @@ class Staff:
         with open(filename, 'wb') as fout:
             tree.write(fout, encoding='utf8', xml_declaration=True)
 
+
 if __name__ == '__main__':
     # Список работников.
-    students = ()
     staff = Staff()
     # Организовать бесконечный цикл запроса команд.
     while True:
@@ -190,15 +183,11 @@ if __name__ == '__main__':
             selected = staff.select(parts[1])
             count = 0
 
-            for person in students:
-                if 2 in marks:
-                    count += 1
+            if selected:
+                for count, person in enumerate(selected, 1):
                     print(
-                        '{:>4}: {}'.format(count, person.get('name', ''))
+                        '{:>4}: {}'.format(count, person.name)
                     )
-            # Если счетчик равен 0, то работники не найдены.
-            if count == 0:
-                print("Нет студентов, которые получили оценку - 2.")
 
         elif command.startswith('load '):
             # Разбить команду на части для выделения имени файла.
