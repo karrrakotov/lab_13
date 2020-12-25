@@ -35,10 +35,6 @@ class Triangle:
 
         self.add()
         self.square()
-        self.height_one()
-        self.height_two()
-        self.height_three()
-        self.corner_one()
 
     # Клонировать числа
     def __clone(self):
@@ -92,35 +88,6 @@ class Triangle:
     def square(self):
         p = self.perimeter / 2
         self.s = math.sqrt(p * (p - self.__first) * (p - self.__second) * (p - self.__third))
-
-    # Вычисление высоты проведенной к стороне A
-    def height_one(self):
-        p = self.perimeter / 2
-        self.h1 = 2 * math.sqrt(p * (p - self.first) * (p - self.second) * (p - self.third)) / self.first
-
-    # Вычисление высоты проведенной к стороне B
-    def height_two(self):
-        p = self.perimeter / 2
-        self.h2 = 2 * math.sqrt(p * (p - self.first) * (p - self.second) * (p - self.third)) / self.second
-
-    # Вычисление высоты проведенной к стороне C
-    def height_three(self):
-        p = self.perimeter / 2
-        self.h3 = 2 * math.sqrt(p * (p - self.first) * (p - self.second) * (p - self.third)) / self.third
-
-    # Вычисление градусов углов по формуле Герона
-    def corner_one(self):
-        a = self.first
-        b = self.second
-        c = self.third
-        first_corner = math.acos(((b ** 2) + (c ** 2) - (a ** 2)) / (2 * c * b))
-        self.f_d = math.degrees(first_corner)
-
-        second_corner = math.acos(((a ** 2) + (b ** 2) - (c ** 2)) / (2 * a * b))
-        self.s_d = math.degrees(second_corner)
-
-        third_corner = math.acos(((a ** 2) + (c ** 2) - (b ** 2)) / (2 * a * c))
-        self.th_d = math.degrees(third_corner)
 
     # Сравнение площадей треугольников
     def __lt__(self, other):
