@@ -3,18 +3,16 @@
 
 import math
 
-#   Создать класс Triangle для представления треугольника. Поля данных должны включать
-#   углы и стороны. Требуется реализовать операции: получения полей данных,
-#   вычисления площади, вычисления периметра, вычисления высот, а также определения
-#   вида треугольника (равносторонний, равнобедренный или прямоугольный).
+#   Выполнить индивидуальное задание 1 лабораторной работы 12, максимально задействовав
+#   имеющиеся в Python средства перегрузки операторов.
 
 
 class Triangle:
 
     def __init__(self, first=1, second=1, third=1):
-        first = int(first)
-        second = int(second)
-        third = int(third)
+        first = float(first)
+        second = float(second)
+        third = float(third)
 
         self.__first = first
         self.__second = second
@@ -31,9 +29,9 @@ class Triangle:
         second = input('Введите вторую сторону треугольника: ')
         third = input('Введите третью сторону треугольника: ')
 
-        self.__first = int(first)
-        self.__second = int(second)
-        self.__third = int(third)
+        self.__first = float(first)
+        self.__second = float(second)
+        self.__third = float(third)
 
         self.add()
         self.square()
@@ -52,7 +50,7 @@ class Triangle:
 
     @first.setter
     def first(self, value):
-        self.__first = int(value)
+        self.__first = float(value)
 
     @property
     def second(self):
@@ -88,27 +86,26 @@ class Triangle:
 
     # Вычисление периметра треугольника
     def add(self):
-        global perimeter
-        perimeter = self.__first + self.__second + self.__third
+        self.perimeter = self.__first + self.__second + self.__third
 
     # Вычисление площади треугольника
     def square(self):
-        p = perimeter / 2
+        p = self.perimeter / 2
         self.s = math.sqrt(p * (p - self.__first) * (p - self.__second) * (p - self.__third))
 
     # Вычисление высоты проведенной к стороне A
     def height_one(self):
-        p = perimeter / 2
+        p = self.perimeter / 2
         self.h1 = 2 * math.sqrt(p * (p - self.first) * (p - self.second) * (p - self.third)) / self.first
 
     # Вычисление высоты проведенной к стороне B
     def height_two(self):
-        p = perimeter / 2
+        p = self.perimeter / 2
         self.h2 = 2 * math.sqrt(p * (p - self.first) * (p - self.second) * (p - self.third)) / self.second
 
     # Вычисление высоты проведенной к стороне C
     def height_three(self):
-        p = perimeter / 2
+        p = self.perimeter / 2
         self.h3 = 2 * math.sqrt(p * (p - self.first) * (p - self.second) * (p - self.third)) / self.third
 
     # Вычисление градусов углов по формуле Герона
