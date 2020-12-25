@@ -40,7 +40,7 @@ class Triangle:
         self.height_three()
         self.corner_one()
 
-    # Клонировать дробь.
+    # Клонировать числа
     def __clone(self):
         return Triangle(self.__first, self.__second, self.__third)
 
@@ -60,18 +60,18 @@ class Triangle:
     def third(self):
         return self.__third
 
-    # Привести дробь к строке.
+    # Привести числа к строке.
     def __str__(self):
         return f"{self.__first} + {self.__second} + {self.__third}"
 
     def __repr__(self):
         return self.__str__()
 
-    # Привести дробь к вещественному значению.
+    # Привести числа к вещественному значению.
     def __float__(self):
         return self.__first + self.__second + self.__third
 
-    # Сложение обыкновенных дробей.
+    # Сложение чисел.
     def __iadd__(self, rhs):  # +=
         if isinstance(rhs, Triangle):
             first = self.first + self.second
