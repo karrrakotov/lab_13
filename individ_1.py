@@ -18,9 +18,7 @@ class Triangle:
         self.__second = second
         self.__third = third
 
-        self.add()
-
-        if first == 0 or second == 0 or third == 0:
+        if first <= 0 or second <= 0 or third <= 0:
             raise ValueError("Ошииибка!!!")
 
     # Ввод сторон треугольника
@@ -35,10 +33,6 @@ class Triangle:
 
         self.add()
         self.square()
-
-    # Клонировать числа
-    def __clone(self):
-        return Triangle(self.__first, self.__second, self.__third)
 
     @property
     def first(self):
@@ -70,24 +64,22 @@ class Triangle:
     # Сложение чисел.
     def __iadd__(self, rhs):  # +=
         if isinstance(rhs, Triangle):
-            first = self.first + self.second
-            second = rhs.first + rhs.second
-            self.__first, self.__second = first, second
+            first = self.first + self.second + self.third
+            self.__first, self.__second, self.third = first
             return self
         else:
             raise ValueError("Illegal type of the argument")
 
-    def __add__(self, rhs):  # +
-        return self.__clone().__iadd__(rhs)
-
     # Вычисление периметра треугольника
     def add(self):
         self.perimeter = self.__first + self.__second + self.__third
+        return self.perimeter
 
     # Вычисление площади треугольника
     def square(self):
         p = self.perimeter / 2
         self.s = math.sqrt(p * (p - self.__first) * (p - self.__second) * (p - self.__third))
+        return self.s
 
     # Сравнение площадей треугольников
     def __lt__(self, other):
@@ -105,11 +97,23 @@ class Triangle:
     def __eq__(self, other):
         return self.s == other.s
 
+    def __add__(self, other):
+        return self.s + other.s
+
     def __sub__(self, other):
         if self.s >= other.s:
             return self.s - other.s
         else:
-            return other.s - self.s
+            return ValueError("Отрицательная площадь! -_-")
+
+    def __mul__(self, other):
+        return self.s * other.s
+
+    def __truediv__(self, other):
+        return self.s / other.s
+
+    def __ne__(self, other):
+        return self.s != other.s
 
 
 if __name__ == '__main__':
@@ -117,15 +121,18 @@ if __name__ == '__main__':
     r1.read()
     r2 = Triangle()
     r2.read()
-
     print(f"Периметр первого треугольника равен: {r1}")
     print(f"Периметр второго треугольника равен: {r2}")
-    print(f"S1 - S2 = {r1 - r2}")
     print(f"S1 < S2: {r1 < r2}")
     print(f"S1 > S2: {r1 > r2}")
     print(f"S1 <= S2: {r1 <= r2}")
     print(f"S1 >= S2: {r1 >= r2}")
     print(f"S1 = S2: {r1 == r2}")
+    print(f"S1 + S2: {r1 + r2}")
+    print(f"S1 - S2: {r1 - r2}")
+    print(f"S1 * S2: {r1 * r2}")
+    print(f"S1 / S2: {r1 / r2}")
+    print(f"S1 != S2: {r1 != r2}")
 
 
 

@@ -1,0 +1,2 @@
+<?xml version='1.0' encoding='utf8'?>
+<students><person><name>karakotov</name><group>ivt</group><marks>[5, 5, 5, 5, 5]</marks></person></students>

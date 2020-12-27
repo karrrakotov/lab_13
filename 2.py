@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from dataclasses import dataclass, field
+from datetime import date
 import sys
 from typing import List
 import xml.etree.ElementTree as ET
@@ -11,19 +12,28 @@ import xml.etree.ElementTree as ET
 class Person:
     name: str
     group: str
-    marks: list
+    mark_one: int
+    mark_two: int
+    mark_three: int
+    mark_four: int
+    mark_five: int
+
 
 
 @dataclass
 class Staff:
     students: List[Person] = field(default_factory=lambda: [])
 
-    def add(self, name, group, marks):
+    def add(self, name, group, mark_one, mark_two, mark_three, mark_four, mark_five):
         self.students.append(
             Person(
                 name=name,
                 group=group,
-                marks=marks
+                mark_one=mark_one,
+                mark_two=mark_two,
+                mark_three=mark_three,
+                mark_four=mark_four,
+                mark_five=mark_five
             )
         )
         self.students.sort(key=lambda person: person.name)
@@ -64,11 +74,11 @@ class Staff:
                     idx,
                     person.name,
                     person.group,
-                    person.marks[0],
-                    person.marks[1],
-                    person.marks[2],
-                    person.marks[3],
-                    person.marks[4]
+                    person.mark_one,
+                    person.mark_two,
+                    person.mark_three,
+                    person.mark_four,
+                    person.mark_five
                 )
             )
         table.append(line)
@@ -127,6 +137,9 @@ class Staff:
             group_element.text = person.group
 
             marks_element = ET.SubElement(person_element, 'marks')
+            marks_element = ET.SubElement(marks_element, 'marks')
+            #for mark in marks:
+                #return mark
             marks_element.text = str(person.marks)
 
             root.append(person_element)

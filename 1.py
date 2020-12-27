@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from dataclasses import dataclass, field
 import sys
+from dataclasses import dataclass, field
 from typing import List
 import xml.etree.ElementTree as ET
+
+
+#   Выполнить индивидуальное задание 2 лабораторной работы 9, использовав классы данных, а
+#   также загрузку и сохранение данных в формат XML.
 
 
 @dataclass(frozen=True)
@@ -26,6 +30,7 @@ class Staff:
                 marks=marks
             )
         )
+
         self.students.sort(key=lambda person: person.name)
 
     def __str__(self):
@@ -75,16 +80,9 @@ class Staff:
 
         return '\n'.join(table)
 
-    def select(self, period):
-        # Получить текущую дату.
-        parts = command.split(' ', maxsplit=2)
-        period = int(parts[1])
+    @staticmethod
+    def select():
         result = []
-        count = 0
-        for person in self.students:
-            if 2 in person.marks:
-                count += 1
-                result.append(person)
         return result
 
     def load(self, filename):
@@ -127,7 +125,7 @@ class Staff:
             group_element.text = person.group
 
             marks_element = ET.SubElement(person_element, 'marks')
-            marks_element.text = str(person.marks)
+            marks_element.text = person.marks
 
             root.append(person_element)
 
@@ -139,12 +137,10 @@ class Staff:
 if __name__ == '__main__':
     # Список работников.
     staff = Staff()
-
     # Организовать бесконечный цикл запроса команд.
     while True:
         # Запросить команду из терминала.
         command = input(">>> ").lower()
-
         # Выполнить действие в соответствие с командой.
         if command == 'exit':
             break
@@ -154,35 +150,57 @@ if __name__ == '__main__':
             name = input("Введите фамилию и имя: ")
             group = input("Введите группу: ")
             marks = list(map(int, input("Введите пять оценок студента, в формате - x y z: ").split(None, n)[:n]))
-            # Добавить работника.
+
+            if 5 > marks[0] < 2:
+                print("Такой оценки не существует, введите значение от 1 до 5!", file=sys.stderr)
+                exit(1)
+
+            if 5 > marks[1] < 2:
+                print("Такой оценки не существует, введите значение от 1 до 5!", file=sys.stderr)
+                exit(1)
+
+            if 5 > marks[2] < 2:
+                print("Такой оценки не существует, введите значение от 1 до 5!", file=sys.stderr)
+                exit(1)
+
+            if 5 > marks[3] < 2:
+                print("Такой оценки не существует, введите значение от 1 до 5!", file=sys.stderr)
+                exit(1)
+
+            if 5 > marks[4] < 2:
+                print("Такой оценки не существует, введите значение от 1 до 5!", file=sys.stderr)
+                exit(1)
+
             staff.add(name, group, marks)
+
         elif command == 'list':
-            # Вывести список.
             print(staff)
+
         elif command.startswith('select '):
-            # Разбить команду на части для выделения номера года.
-            parts = command.split(maxsplit=1)
-            # Запросить работников.
+            parts = command.split(' ', maxsplit=2)
             selected = staff.select(parts[1])
-            # Вывести результаты запроса.
+            count = 0
+
             if selected:
                 for count, person in enumerate(selected, 1):
                     print(
                         '{:>4}: {}'.format(count, person.name)
                     )
-            else:
-                print("Нет студентов, которые получили оценку - 2.")
+
         elif command.startswith('load '):
-            # Разбить команду на части для имени файла.
-            parts = command.split(maxsplit=1)
-            # Загрузить данные из файла.
+            # Разбить команду на части для выделения имени файла.
+            parts = command.split(' ', maxsplit=1)
+            # Прочитать данные из файла JSON.
             staff.load(parts[1])
+
         elif command.startswith('save '):
-            # Разбить команду на части для имени файла.
-            parts = command.split(maxsplit=1)
-            # Сохранить данные в файл.
+            # Разбить команду на части для выделения имени файла.
+            parts = command.split(' ', maxsplit=1)
+            # Сохранить данные в файл JSON.
             staff.save(parts[1])
+
         elif command == 'help':
+            # Вывести справку о работе с программой.
             # Вывести справку о работе с программой.
             print("Список команд:\n")
             print("add - добавить студента;")
