@@ -54,18 +54,18 @@ if __name__ == '__main__':
     r1 = Triangle(5, 4, 3, 6)
     r2 = Triangle(5, 5, 6, 12)
 
-    print(f"Периметр первого треугольника равен: {r1}")
-    print(f"Периметр второго треугольника равен: {r2}")
     print(f"S1 < S2: {r1 < r2}")
     print(f"S1 > S2: {r1 > r2}")
     print(f"S1 <= S2: {r1 <= r2}")
     print(f"S1 >= S2: {r1 >= r2}")
     print(f"S1 = S2: {r1 == r2}")
+    print(f"S1 != S2: {r1 != r2}")
+
     print(f"S1 + S2: {r1 + r2}")
     print(f"S1 - S2: {r1 - r2}")
     print(f"S1 * S2: {r1 * r2}")
     print(f"S1 / S2: {r1 / r2}")
-    print(f"S1 != S2: {r1 != r2}")
+
 
 
 
