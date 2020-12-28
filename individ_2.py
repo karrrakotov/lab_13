@@ -130,7 +130,8 @@ class Staff:
             group_element.text = person.group
 
             marks_element = ET.SubElement(person_element, 'marks')
-            marks_element.text = str(person.marks)
+            mark = ''.join(str(i) for i in marks)
+            marks_element.text = str(mark)
 
             root.append(person_element)
 
