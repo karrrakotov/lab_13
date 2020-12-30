@@ -60,7 +60,7 @@ class Staff:
         )
         table.append(line)
 
-        # Вывести данные о всех студентах.
+        # Вывести данные о всех оценках ученика.
         for idx, person in enumerate(self.students, 1):
             table.append(
                 '| {:>3} | {:<30} | {:<20} | {:>11} | {:>11} | {:>11} | {:>11} | {:>11} |'.format(
@@ -79,7 +79,7 @@ class Staff:
         return '\n'.join(table)
 
     def select(self, period):
-        # Получить студентов, которые получили оценку 2.
+        # Получить данные студентов, которые получили оценку 2.
         parts = command.split(' ', maxsplit=2)
         period = int(parts[1])
         result = []
@@ -155,12 +155,12 @@ if __name__ == '__main__':
         if command == 'exit':
             break
         elif command == 'add':
-            # Запросить данные о оценках ученика.
+            # Запросить данные об учениках.
             n = 5
             name = input("Введите фамилию и имя: ")
             group = input("Введите группу: ")
             marks = list(map(int, input("Введите пять оценок студента, в формате - x y z: ").split(None, n)[:n]))
-            # Добавить ученика.
+            # Добавить учеников.
             staff.add(name, group, marks)
         elif command == 'list':
             # Вывести список.
