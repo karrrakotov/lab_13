@@ -130,6 +130,8 @@ class Staff:
             group_element.text = person.group
 
             marks_element = ET.SubElement(person_element, 'marks')
+
+            # Преобразование списка к строке
             mark = ''.join(str(i) for i in marks)
             marks_element.text = str(mark)
 
