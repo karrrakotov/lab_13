@@ -60,7 +60,7 @@ class Staff:
         )
         table.append(line)
 
-        # Вывести данные о всех сотрудниках.
+        # Вывести данные о всех студентах.
         for idx, person in enumerate(self.students, 1):
             table.append(
                 '| {:>3} | {:<30} | {:<20} | {:>11} | {:>11} | {:>11} | {:>11} | {:>11} |'.format(
@@ -79,7 +79,7 @@ class Staff:
         return '\n'.join(table)
 
     def select(self, period):
-        # Получить текущую дату.
+        # Получить студентов, которые получили оценку 2.
         parts = command.split(' ', maxsplit=2)
         period = int(parts[1])
         result = []
@@ -143,7 +143,7 @@ class Staff:
 
 
 if __name__ == '__main__':
-    # Список работников.
+    # Список учеников.
     staff = Staff()
 
     # Организовать бесконечный цикл запроса команд.
@@ -155,20 +155,19 @@ if __name__ == '__main__':
         if command == 'exit':
             break
         elif command == 'add':
-            # Запросить данные о работнике.
+            # Запросить данные о оценках ученика.
             n = 5
             name = input("Введите фамилию и имя: ")
             group = input("Введите группу: ")
             marks = list(map(int, input("Введите пять оценок студента, в формате - x y z: ").split(None, n)[:n]))
-            # Добавить работника.
+            # Добавить ученика.
             staff.add(name, group, marks)
         elif command == 'list':
             # Вывести список.
             print(staff)
         elif command.startswith('select '):
-            # Разбить команду на части для выделения номера года.
             parts = command.split(maxsplit=1)
-            # Запросить работников.
+            # Запросить учеников.
             selected = staff.select(parts[1])
             # Вывести результаты запроса.
             if selected:

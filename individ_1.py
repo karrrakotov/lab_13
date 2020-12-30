@@ -37,7 +37,7 @@ class Triangle:
     def __ne__(self, other):
         return self.square != other.square
 
-    # Выполнения арефметических операций над площадями
+    # Выполнения арифметических операций над площадями
     def __add__(self, other):
         return self.square + other.square
 
