@@ -14,7 +14,7 @@ import xml.etree.ElementTree as ET
 class Person:
     name: str
     group: str
-    marks: list
+    marks: list[int]
 
 
 @dataclass
@@ -77,6 +77,9 @@ class Staff:
         table.append(line)
 
         return '\n'.join(table)
+
+    def __repr__(self):
+        return self.__str__()
 
     def select(self, period):
         # Получить данные студентов, которые получили оценку 2.
